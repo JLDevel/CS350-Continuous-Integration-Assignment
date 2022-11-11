@@ -104,7 +104,7 @@ task defineUser {
         }
         exec{
             workingDir = 'build/gh-pages'
-            commandLine = ['git', 'config', 'user.name', "Jacob Leith"]
+            commandLine = ['git', 'config', 'user.name', "jl_devel@outlook.com"]
         }
     }
 }
