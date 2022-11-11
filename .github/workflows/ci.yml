@@ -20,6 +20,6 @@ jobs:
       run: chmod +x gradlew
     - name: Build and test
       run: |
-       git config user.email "${GITHUB_ACTOR}"
-       git config user.name "${GITHUB_ACTOR}@users.noreply.github.com"
+       git config user.email "jl_devel@outlook.com"
+       git config user.name "Jacob Leith"
        gradle deployReports
