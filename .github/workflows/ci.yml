@@ -19,4 +19,6 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build and test
+      run: git config user.email "jl_devel@outlook.com"
+      run: git config user.name "Jacob Leith"
       run: gradle deployReports
