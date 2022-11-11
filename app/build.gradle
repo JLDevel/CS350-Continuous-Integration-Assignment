@@ -49,7 +49,7 @@ task reports (dependsOn: ['build', 'run', 'copyDocs', 'copyReports'])
 ////////  Website publication on GitHub pages ///////////////////
 
 
-def websiteRepo='https://github.com/JLDevel/CS350-Assignment-Website-Repository.git'
+def websiteRepo='git@github.com:JLDevel/CS350-Assignment-Website-Repository.git'
 
 task clearPages(type: Delete) {
     delete 'build/gh-pages'
@@ -86,7 +86,7 @@ task updateGHPages (dependsOn: 'copyWebsite') {
         }
         exec {
             workingDir = 'build/gh-pages'
-            commandLine = ['git', 'commit', '-m', 'Updating-webpages']
+            commandLine = ['git', 'commit', '-am', 'Updating-webpages']
         }
         exec {
             workingDir = 'build/gh-pages'
