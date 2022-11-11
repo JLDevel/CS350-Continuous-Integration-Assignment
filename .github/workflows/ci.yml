@@ -18,7 +18,9 @@ jobs:
         distribution: 'adopt'
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    - name: Build and test
+    - name: Define email
       run: git config user.email "jl_devel@outlook.com"
+    - name: Define name
       run: git config user.name "Jacob Leith"
+    - name: Build and test
       run: gradle deployReports
