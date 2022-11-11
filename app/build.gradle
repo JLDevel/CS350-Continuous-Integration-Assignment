@@ -75,7 +75,7 @@ task copyWebsite (dependsOn: ['reports', 'clonePages']) {
 
 
 
-task updateGHPages (dependsOn: 'copyWebsite') {
+task updateGHPages (dependsOn: ['copyWebsite', 'defineUser']) {
     group = "Reporting"
     description  'Copies reports to the website repo and pushes to GitHub'
     doLast {
@@ -109,7 +109,7 @@ task defineUser {
     }
 }
 
-task deployReports (dependsOn: ['defineUser', 'updateGHPages'])
+task deployReports (dependsOn: 'updateGHPages')
 deployReports.doLast {
     println 'reports deployed'
 }
