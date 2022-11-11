@@ -33,3 +33,69 @@ tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
+
+task copyDocs (type: Copy){
+    from(file('build/docs/'))
+    into(file('build/reports/'))
+}
+
+task copyReports (type: Copy){
+    from(file('src/main/html/'))
+    into(file('build/reports/'))
+}
+
+task reports (dependsOn: ['build', 'run', 'copyDocs', 'copyReports'])
+
+////////  Website publication on GitHub pages ///////////////////
+
+
+def websiteRepo='https://github.com/JLDevel/CS350-Assignment-Website-Repository.git'
+
+task clearPages(type: Delete) {
+    delete 'build/gh-pages'
+}
+
+task clonePages(dependsOn: ['clearPages']) {
+    doLast {
+        exec {
+            workingDir = '.'
+            commandLine = ['git', 'clone', websiteRepo, 'build/gh-pages']
+        }
+    }
+}
+
+
+task copyWebsite (dependsOn: ['reports', 'clonePages']) {
+    doLast {
+        ant.copy (todir: 'build/gh-pages') {
+            fileset(dir: 'build/reports')
+        }
+    }
+}
+
+
+
+task updateGHPages (dependsOn: 'copyWebsite') {
+    group = "Reporting"
+    description  'Copies reports to the website repo and pushes to GitHub'
+    doLast {
+        def pagesDir = "$buildDir/gh-pages"
+        exec {
+            workingDir = 'build/gh-pages'
+            commandLine = ['git', 'add', '.']
+        }
+        exec {
+            workingDir = 'build/gh-pages'
+            commandLine = ['git', 'commit', '-m', 'Updating-webpages']
+        }
+        exec {
+            workingDir = 'build/gh-pages'
+            commandLine = ['git', 'push']
+        }
+    }
+}
+
+task deployReports (dependsOn: 'updateGHPages')
+deployReports.doLast {
+    println 'reports deployed'
+}
