@@ -75,7 +75,7 @@ task copyWebsite (dependsOn: ['reports', 'clonePages']) {
 
 
 
-task updateGHPages (dependsOn: ['copyWebsite', 'defineUser']) {
+task updateGHPages (dependsOn: 'copyWebsite') {
     group = "Reporting"
     description  'Copies reports to the website repo and pushes to GitHub'
     doLast {
@@ -91,20 +91,6 @@ task updateGHPages (dependsOn: ['copyWebsite', 'defineUser']) {
         exec {
             workingDir = 'build/gh-pages'
             commandLine = ['git', 'push']
-        }
-    }
-}
-
-task defineUser {
-    description 'sets user email and name for git commands'
-    doLast{
-        exec{
-            workingDir = 'build/gh-pages'
-            commandLine = ['git', 'config', 'user.email', "jl_devel@outlook.com"]
-        }
-        exec{
-            workingDir = 'build/gh-pages'
-            commandLine = ['git', 'config', 'user.name', "jl_devel@outlook.com"]
         }
     }
 }
