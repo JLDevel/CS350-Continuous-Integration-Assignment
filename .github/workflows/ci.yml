@@ -20,6 +20,8 @@ jobs:
       run: chmod +x gradlew
     - name: Build and test
       run: |
-        git config --global user.name 'JLDevel'
-        git config --global user.email 'jl_devel@outlook.com'
+        eval $(ssh-agent -s -t 600)
+        ssh-add <(echo "${{ secrets.REPORTS_SSH_KEY}}")
+        git config --global user.email "jl_devel@outlook.com"
+        git config --global user.name "Project Actions"
         gradle deployReports
